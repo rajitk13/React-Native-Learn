@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
   },
   cardElevated: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#000000',
     elevation: 3,
     shadowOffset: {
       width: 1,
@@ -59,18 +59,18 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
   },
   cardTitle: {
-    color: '#000000',
+    color: '#FFFFFF',
     fontSize: 22,
     fontWeight: 'bold',
     marginBottom: 4,
   },
   cardLabel: {
-    color: '#000000',
+    color: '#FFFFFF',
     fontSize: 14,
     marginBottom: 6,
   },
   cardDescription: {
-    color: '#242B2E',
+    color: 'cyan',
     fontSize: 12,
     marginBottom: 12,
     marginTop: 6,
