@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import type {PropsWithChildren} from 'react';
 import {
   StyleSheet,
   Text,
@@ -7,33 +6,58 @@ import {
   Image,
   ImageSourcePropType,
   Pressable,
+  Animated,
+  Easing,
 } from 'react-native';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 
-//Importing Images
-
+// Importing Images
 import DiceOne from '../assets/One.png';
 import DiceTwo from '../assets/Two.png';
 import DiceThree from '../assets/Three.png';
 import DiceFour from '../assets/Four.png';
 import DiceFive from '../assets/Five.png';
 
-type DiceProps = PropsWithChildren<{
+type DiceProps = {
   imageUrl: ImageSourcePropType;
-}>;
+};
 
 const Dice = ({imageUrl}: DiceProps) => {
   return (
-    <View>
+    <View style={styles.diceContainer}>
       <Image style={styles.diceImage} source={imageUrl} />
     </View>
   );
 };
 
 export default function App(): JSX.Element {
+  const [diceImage, setDiceImage] = useState(DiceOne);
+  const [rotation, setRotation] = useState(0);
+
+  const rotateDice = () => {
+    setRotation(rotation + 1);
+    // Logic to roll the dice and set new image
+    const diceImages = [DiceOne, DiceTwo, DiceThree, DiceFour, DiceFive];
+    const randomIndex = Math.floor(Math.random() * diceImages.length);
+    setDiceImage(diceImages[randomIndex]);
+
+    // Haptic feedback
+    ReactNativeHapticFeedback.trigger('impactLight');
+  };
+
   return (
-    <View>
-      <Text>App</Text>
+    <View style={styles.container}>
+      <Text style={styles.title}>Dice Roller</Text>
+      <Animated.View
+        style={[
+          styles.diceContainer,
+          {transform: [{rotate: `${rotation * 360}deg`}]},
+        ]}>
+        <Dice imageUrl={diceImage} />
+      </Animated.View>
+      <Pressable style={styles.rollDiceBtn} onPress={rotateDice}>
+        <Text style={styles.rollDiceBtnText}>Roll Dice</Text>
+      </Pressable>
     </View>
   );
 }
@@ -41,23 +65,31 @@ export default function App(): JSX.Element {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
     justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: '#FFF2F2',
   },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20,
+  },
   diceContainer: {
-    margin: 12,
+    marginVertical: 20,
   },
   diceImage: {
     width: 200,
     height: 200,
   },
-  rollDiceBtnText: {
+  rollDiceBtn: {
     paddingVertical: 10,
     paddingHorizontal: 40,
     borderWidth: 2,
     borderRadius: 8,
     borderColor: '#E5E0FF',
+    marginTop: 20,
+  },
+  rollDiceBtnText: {
     fontSize: 16,
     color: '#8EA7E9',
     fontWeight: '700',
