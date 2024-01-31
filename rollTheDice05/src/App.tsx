@@ -7,7 +7,6 @@ import {
   ImageSourcePropType,
   Pressable,
   Animated,
-  Easing,
 } from 'react-native';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 
